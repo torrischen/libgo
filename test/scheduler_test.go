@@ -15,7 +15,10 @@ func TestScheduler(t *testing.T) {
 	s := scheduler.NewScheduler()
 	defer s.Stop()
 
-	bc := scheduler.NewBaseCore(func(i interface{}) { t.Log(i) }, 100, 1)
+	bc := scheduler.NewBaseCore(func(i interface{}) error {
+		t.Log(i)
+		return nil
+	}, 100, 1)
 
 	c := &core{
 		*bc,

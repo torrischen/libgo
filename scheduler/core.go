@@ -15,12 +15,12 @@ type Core interface {
 type BaseCore struct {
 	Ctx        context.Context
 	Cancel     context.CancelFunc
-	HandleFunc func(interface{})
+	HandleFunc func(interface{}) error
 	Cache      chan interface{}
 	ErrCh      chan error
 }
 
-func NewBaseCore(f func(interface{}), cacheSize int, errChSize int) *BaseCore {
+func NewBaseCore(f func(interface{}) error, cacheSize int, errChSize int) *BaseCore {
 	ctx, cancel := context.WithCancel(context.Background())
 	return &BaseCore{
 		Ctx:        ctx,
