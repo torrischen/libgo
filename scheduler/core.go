@@ -38,7 +38,9 @@ func (c *BaseCore) Listen() {
 			case <-c.Ctx.Done():
 				return
 			case event := <-c.Cache:
-				c.HandleFunc(event)
+				if err := c.HandleFunc(event); err != nil {
+					c.ErrCh <- err
+				}
 			}
 		}
 	}()
